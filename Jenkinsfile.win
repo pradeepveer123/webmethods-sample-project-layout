@@ -20,7 +20,9 @@
 
 pipeline {
     agent any 
-
+environment {
+    PATH= "C:/ProgramData/Jenkins/.jenkins/workspace"
+  }
     stages {
         stage('Build'){
             steps {
