@@ -21,13 +21,17 @@
 pipeline {
     agent any 
 environment {
-    PATH= "C:/ProgramData/Jenkins/.jenkins/workspace;C:/Windows/System32"
+    CUSTOM_PATH= "C:/ProgramData/Jenkins/.jenkins/workspace;C:/Windows/System32"
   }
     stages {
         stage('Build'){
-            steps {
-                bat "C:/SoftwareAG11/common/AssetBuildEnvironment/ant/bin/ant -DSAGHome=C:/SoftwareAG11 -DSAG_CI_HOME=${env.SAG_CI_HOME} -DprojectName=${env.JOB_NAME} build"
-            }
+		script {
+                    // Override PATH for this stage
+                    withEnv(["PATH=${CUSTOM_PATH}"]) {
+                        bat "C:/SoftwareAG11/common/AssetBuildEnvironment/ant/bin/ant -DSAGHome=C:/SoftwareAG11 -DSAG_CI_HOME=${env.SAG_CI_HOME} -DprojectName=${env.JOB_NAME} build"
+                    }
+                }
+
         }
         stage('Deploy') {
             steps {
