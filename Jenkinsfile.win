@@ -25,7 +25,7 @@ environment {
   }
     stages {
         stage('Build'){
-		script {
+		steps {
                     // Override PATH for this stage
                     withEnv(["PATH=${CUSTOM_PATH}"]) {
                         bat "C:/SoftwareAG11/common/AssetBuildEnvironment/ant/bin/ant -DSAGHome=C:/SoftwareAG11 -DSAG_CI_HOME=${env.SAG_CI_HOME} -DprojectName=${env.JOB_NAME} build"
